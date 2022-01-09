@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ArrayToBox : MonoBehaviour
 {
@@ -10,19 +11,24 @@ public class ArrayToBox : MonoBehaviour
     [SerializeField] private Transform parentObject;
     //Start Position indicates where the first block should spawn.
     [SerializeField] private Vector2 startPos;
-    [SerializeField] private int rows;
-    [SerializeField] private int columns;
-     
-    //private int[,] array2D = new intMakeArray();
 
+    [Header("Set Number of rows")]
+    [SerializeField] public int rows;
+    [SerializeField] private int columns;
+
+    [Header("Upper limit of hit range per team")]
+    [SerializeField] private int redTeam = 60;
+    [SerializeField] private int greenTeam = 80;
+    [SerializeField] private int blueTeam = 100;
+    [SerializeField] private int purpleTeam = 120;
+    [SerializeField] private int orangeTeam = 140;
+    private int[] modeList = { 1, 2, 3, 4 };
+    private int[,] boxMode;
+    
     private int[,] MakeArray()
     {
         int height = rows;        /*Number of rows*/
         int width = columns;      /*Number of columns*/
-
-        // Upper limit of hit range per team
-        //int redTeam = 100; int greenTeam = 120; int blueTeam = 140; int purpleTeam = 160; int orangeTeam = 180;
-        int redTeam = 60; int greenTeam = 80; int blueTeam = 100; int purpleTeam = 120; int orangeTeam = 140;
 
         // Percentage that defines the lower limit of hits range per team
         float percentage = 0.15f;
@@ -62,7 +68,7 @@ public class ArrayToBox : MonoBehaviour
         }
 
         // Gets values used for calculation of placing special boxes
-        int[] BoxSpecial(int boxes, int pos, int team, int hits, int line)
+        int[] GetBoxSpecial(int boxes, int pos, int team, int hits, int line)
         {
             int[] tmpspecial = { boxes, pos, team, hits, line };
             return tmpspecial;
@@ -76,6 +82,13 @@ public class ArrayToBox : MonoBehaviour
             return position;
         }
 
+        // Chooses randomly depending on a and b args a special box
+        int SelectSpecialBox(int a, int b)
+        {
+            int select = rand.Next(a, b);
+            return modeList[select];
+        }
+
         //Set color teamss
         int[] teamsList = { 0, 1, 2, 3, 4 };
         
@@ -83,17 +96,30 @@ public class ArrayToBox : MonoBehaviour
         int[,] teamsComplete = { { 0, redTeam }, { 1, greenTeam }, { 2, blueTeam }, { 3, purpleTeam }, { 4, orangeTeam } };
 
         // Create a zero matrix with dimensions of board
+        // to save hit points per box
         int[,] pista = new int[height, width];
+        for (int h = 0; h < height; h++)
+            for (int w = 0; w < width; w++)
+                pista[h, w] = 0;
+
+        // Create a zero (preassigned values for normal box) matrix with 
+        // dimensions of board to save mode of operation per box
+        boxMode = new int[height, width];
         for (int j = 0; j < height; j++)
             for (int k = 0; k < width; k++)
-                pista[j, k] = 0;
+                boxMode[j, k] = 0;
+
 
         //System.Random rand = new System.Random();
         int randBoxNum; int boxPos; int randTeam; int randHits;
-        int[] current = { 0, 0, 0, 0, 0 }; int[] special = { 0, 0, 0, 0, 0 };
+        int[] previous = { 0, 0, 0, 0, 0 }; int[] special = { 0, 0, 0, 0, 0 };
 
         for (int x = 0; x < height; x++)
         {
+            // Leave a blank row to the top of game board
+            if (x == (height-7))
+                continue;
+
             // Get color team
             randTeam = rand.Next(0, teamsList.Length);
             // Get number of boxes
@@ -111,24 +137,24 @@ public class ArrayToBox : MonoBehaviour
             }
 
             // Check if must add a special box
-            if (randTeam > (teamsList.Length - 3))
+            if (previous[2] > (teamsList.Length - 3))
             {
-                // Check if previous new and current lines are high color teams 
-                special = BoxSpecial(randBoxNum, boxPos, randTeam, randHits, x);
-                if (current[2] > (teamsList.Length - 3))
+                // Check if previous new and previous lines are high color teams 
+                special = GetBoxSpecial(randBoxNum, boxPos, randTeam, randHits, x);
+                if (randTeam > (teamsList.Length - 3))
                 {
                     // Get a random position to put special box
                     int a = PosSpecial(randBoxNum, boxPos);
-                    pista[x, a] = 22;
+                    boxMode[x, a] = SelectSpecialBox(2,4);
                 }
-                // Update current value
-                current = special;
-            }
-            else
-            {
-                // Update current value
-                current = BoxSpecial(randBoxNum, boxPos, randTeam, randHits, x);
-            }
+                else if (randTeam > 0)
+                {
+                    int a = PosSpecial(randBoxNum, boxPos);
+                    boxMode[x, a] = SelectSpecialBox(0, 2);
+                }
+           }
+           // Update current value
+           previous = GetBoxSpecial(randBoxNum, boxPos, randTeam, randHits, x);
         }
         return pista;
     }
@@ -137,10 +163,12 @@ public class ArrayToBox : MonoBehaviour
        
     void Start()
     {
-        ArrayToObjects(MakeArray());
+        //boxMode = new int[rows,columns];
+        LevelNum.linesRemained = rows - 7;
+        ArrayToObjects(MakeArray(), boxMode);
     }
 
-    public void ArrayToObjects(int[,] array)
+    public void ArrayToObjects(int[,] arrayHits,int[,] arrayMode)
     {
         //Calculate block width and height
         float blockWidth = blockPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
@@ -148,22 +176,29 @@ public class ArrayToBox : MonoBehaviour
 
         //Next Position indicates where the next block should spawn
         Vector2 nextPos = startPos;
-        //Color currentColor =new Color();
-                
+                        
         //Check all array positions:
-        for (int i = array.GetLength(0) - 1; i >= 0; i--)
+        for (int i = arrayHits.GetLength(0) - 1; i >= 0; i--)
         {
-            for (int j = 0; j < array.GetLength(1); j++)
+            //int cnt = 0;
+            for (int j = 0; j < arrayHits.GetLength(1); j++)
+            //for (int j = 0; j < arrayHits.GetLength(1); j++)
             {
                 //If array position value is greater than 0: Spawn Object as child of parentObj
-                if (array[i, j] > 0)
+                if (arrayHits[i, j] > 0)
                 {
-                    //currentColor = BoxTeamColor(array[i, j]);
                     GameObject block = Instantiate(blockPrefab, nextPos, transform.rotation, parentObject);
+                    //Set block color depending on number of hits                    
+                    block.GetComponent<Box>().SetTeamColor(BoxTeamColor(arrayHits[i, j], arrayMode[i, j]));
+                    //Set block sprite depending on its mode of operation
+                    block.GetComponent<Box>().SetBoxSprite(arrayMode[i, j]);
                     //Set blocks hitpoints equal to array value
-                    block.GetComponent<Box>().SetTeamColor(BoxTeamColor(array[i, j]));
-                    block.GetComponent<Box>().SetHitPoints(array[i, j]);
+                    block.GetComponent<Box>().SetHitPoints(arrayHits[i, j]);
+                    //Set absolute grid position of the box
+                    block.GetComponent<Box>().SetAbsolutePosX(j);
+                    block.GetComponent<Box>().SetAbsolutePosY(arrayHits.GetLength(0) - 1 - i);
                 }
+                
                 //Calculate next X spawn position
                 nextPos.x += blockWidth;
             }
@@ -174,61 +209,51 @@ public class ArrayToBox : MonoBehaviour
     }
 
     // Set Box Initial Color
-    public Color32 BoxTeamColor(int hitsState)
+    public Color32 BoxTeamColor(int hitsState, int specialColor)
     {
-        int teamColor;
-        if (hitsState == 22)
-            teamColor = 1;
-        else if (hitsState <= 60)
-            teamColor = 2;
-        else if (hitsState <= 80)
-            teamColor = 3;
-        else if (hitsState <= 100)
-            teamColor = 4;
-        else if (hitsState <= 120)
-            teamColor = 5;
-        else 
-            teamColor = 6;
-
         Color32 boxColor = new Color32();
-        Debug.Log("teamColor = " + teamColor);
-        switch (teamColor)
-        {
-            case 1:
-                boxColor = new Color32(140, 120, 30, 255);
-                break;
-            case 2:
-                boxColor = new Color32(222, 52, 52, 255);
-                break;
-            case 3:
-                boxColor = new Color32(36, 142, 36, 255);
-                break;
-            case 4:
-                boxColor = new Color32(71, 71, 226, 255);
-                break;
-            case 5:
-                boxColor = new Color32(128, 31, 128, 255);
-                break;
-            case 6:
-                boxColor = new Color32(193, 104, 14, 255);
-                break;
-            
-        }
+        //If box is special assign special color 
+        //else assign appropriate team color 
+        if (specialColor > 0)
+            boxColor = new Color32(140, 120, 30, 255);
+        else if (hitsState <= redTeam)
+            boxColor = new Color32(225, 116, 116, 255);
+        else if (hitsState <= greenTeam)
+            boxColor = new Color32(36, 142, 36, 255);
+        else if (hitsState <= blueTeam)
+            boxColor = new Color32(71, 71, 226, 255);
+        else if (hitsState <= purpleTeam)
+            boxColor = new Color32(148, 98, 148, 255);
+        else
+            boxColor = new Color32(193, 104, 14, 255);
 
         return boxColor;
     }
 
-    //Move Blocks Parent down
+    public bool CheckForWin()
+    {
+        if ((rows - 6) <= Spawner3.levelCount)
+        {
+            Box[] boxes = FindObjectsOfType<Box>();
+            return boxes.Length == 0;
+        }
+        else
+            return false;
+    }
+
+    /*//Move Blocks Parent down
     public void NextLevel()
     {
         parentObject.position -= new Vector3(0, blockPrefab.GetComponent<SpriteRenderer>().bounds.size.y);
     }
-
+*/
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             NextLevel();
-        }
+        }*/
+        if (CheckForWin())
+            SceneManager.LoadScene(5);
     }
 }

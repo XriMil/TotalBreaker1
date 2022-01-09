@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ball
   - Bottom
+  - Block
+  - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -18,9 +21,9 @@ TagManager:
   - ballLayer
   - Map Details
   - Block
-  - 
-  - 
-  - 
+  - Spawner
+  - Trail
+  - Wall
   - 
   - 
   - 
