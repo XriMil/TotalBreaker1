@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2245.0393"
+   height="1587.4016"
+   viewBox="0 0 593.99999 420.00001"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="bckgndtile.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.58843462"
+     inkscape:cx="1097.828"
+     inkscape:cy="541.26659"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="false"
+     units="px" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g17114">
+      <g
+         id="g17088">
+        <g
+           id="g17060"
+           transform="matrix(0.99999996,0,0,1.0001859,5.4284629e-6,-0.00294584)">
+          <g
+             id="g16814">
+            <g
+               id="g9635"
+               transform="matrix(0.99960664,0,0,0.99860143,0.00839703,0.02215744)">
+              <rect
+                 style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                 id="rect1110"
+                 width="63.5"
+                 height="71.4375"
+                 x="21.460888"
+                 y="15.875" />
+              <use
+                 x="0"
+                 y="0"
+                 xlink:href="#g9193"
+                 id="use9197"
+                 width="100%"
+                 height="100%"
+                 transform="translate(31.75)" />
+              <g
+                 id="g9193"
+                 transform="translate(-23.518277)">
+                <path
+                   id="use1120"
+                   style="fill:#7d7df6;fill-opacity:0.134884;stroke:#0e5a9c;stroke-width:0.214424;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.221445"
+                   d="m 51.203728,17.834295 h 3.425865 c 1.923222,0 3.471527,1.553989 3.471527,3.48427 v 3.400367 c 0,1.930283 -1.548305,3.484272 -3.471527,3.484272 h -3.425865 c -1.923217,0 -3.471516,-1.553989 -3.471516,-3.484272 v -3.400367 c 0,-1.930281 1.548299,-3.48427 3.471516,-3.48427 z" />
+                <use
+                   x="0"
+                   y="0"
+                   xlink:href="#use1120"
+                   id="use8117"
+                   width="100%"
+                   height="100%"
+                   transform="translate(0,14.2875)" />
+                <use
+                   x="0"
+                   y="0"
+                   xlink:href="#use1120"
+                   id="use8119"
+                   width="100%"
+                   height="100%"
+                   transform="translate(-6.0726178e-6,28.575)" />
+                <use
+                   x="0"
+                   y="0"
+                   xlink:href="#use1120"
+                   id="use8121"
+                   width="100%"
+                   height="100%"
+                   transform="translate(0,42.8625)" />
+                <use
+                   x="0"
+                   y="0"
+                   xlink:href="#use1120"
+                   id="use8532"
+                   width="100%"
+                   height="100%"
+                   transform="translate(0,57.15)" />
+              </g>
+              <use
+                 x="0"
+                 y="0"
+                 xlink:href="#g9193"
+                 id="use9195"
+                 width="100%"
+                 height="100%"
+                 transform="translate(47.625)" />
+              <use
+                 x="0"
+                 y="0"
+                 xlink:href="#g9193"
+                 id="use9235"
+                 width="100%"
+                 height="100%"
+                 transform="translate(15.875)" />
+            </g>
+            <use
+               x="0"
+               y="0"
+               xlink:href="#g9635"
+               id="use9637"
+               width="100%"
+               height="100%"
+               transform="translate(63.475017)" />
+            <use
+               x="0"
+               y="0"
+               xlink:href="#g9635"
+               id="use9675"
+               width="100%"
+               height="100%"
+               transform="translate(126.95004)" />
+            <use
+               x="0"
+               y="0"
+               xlink:href="#g9635"
+               id="use9677"
+               width="100%"
+               height="100%"
+               transform="translate(190.42507)" />
+          </g>
+          <use
+             x="0"
+             y="0"
+             xlink:href="#g16814"
+             id="use16816"
+             transform="translate(0,71.41101)"
+             width="100%"
+             height="100%" />
+        </g>
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g17060"
+           id="use17062"
+           width="100%"
+           height="100%"
+           transform="translate(0,142.87497)" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g17060"
+           id="use17064"
+           width="100%"
+           height="100%" />
+        <use
+           x="0"
+           y="0"
+           xlink:href="#use17062"
+           id="use17066"
+           width="100%"
+           height="100%" />
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g17088"
+         id="use17090"
+         width="100%"
+         height="100%"
+         transform="translate(254.00001)" />
+    </g>
+  </g>
+</svg>
