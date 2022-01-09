@@ -43,7 +43,7 @@ public class DestroyBall : MonoBehaviour
 
         if (ballsDestroyed >= spawner.GetSpawnNum() && !spawner.IsBurstActive())
         {
-            spawner.spawnerCollider.enabled = false;
+            //spawner.spawnerCollider.enabled = false;
             ChangeNextLevel();
             Spawner3.levelCount++;
             LevelNum.linesRemained--;
